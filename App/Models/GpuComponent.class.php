@@ -53,3 +53,14 @@ final class GpuComponent extends Component
         return $this;
     }
 }
+
+function createGpuComponent($id, $name, $price, $brandId, $ram) {
+    return new GpuComponent($id, $name, $price, $brandId, $ram);
+}
+
+function fetchAllGpuComponents() {
+    global $databaseHandler;
+
+    $statement = $databaseHandler->query('SELECT * FROM `gpus`');
+    return $statement->fetchAll(PDO::FETCH_FUNC, 'createGpuComponent');
+}
