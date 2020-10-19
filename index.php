@@ -2,8 +2,17 @@
 
 require_once './App/Models/CpuComponent.class.php';
 require_once './App/Models/GpuComponent.class.php';
+require_once './App/Models/HddComponent.class.php';
+require_once './App/Models/RamComponent.class.php';
+require_once './App/Models/OsComponent.class.php';
 
 $databaseHandler = new PDO('mysql:host=localhost;dbname=php-config', 'root', 'root');
+
+$cpus = fetchAllCpuComponents();
+$gpus = fetchAllGpuComponents();
+$hdds = fetchAllHddComponents();
+$os = fetchAllOsComponents();
+$rams = fetchAllRamComponents();
 
 ?>
 
@@ -24,47 +33,42 @@ $databaseHandler = new PDO('mysql:host=localhost;dbname=php-config', 'root', 'ro
             <div class="form-group">
                 <label for="cpu">Processeur</label>
                 <select name="cpu" class="form-control">
-                    <option value="1">Acu j3 Dual-Core (9ème génération)</option>
-                    <option value="2">Acu j5 Quad-Core (9ème génération)</option>
-                    <option value="3">Acu j7 Octo-Core (9ème génération)</option>
+                    <?php foreach ($cpus as $cpu): ?>
+                    <option value="<?= $cpu->getId() ?>"><?= $cpu->getName() ?> - <?= $cpu->getPrice() ?> &euro;</option>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <div class="form-group">
                 <label for="ram">Mémoire vive</label>
                 <select name="ram" class="form-control">
-                    <option value="1">2 x 4 Go π-Rate DDR4</option>
-                    <option value="2">1 x 8 Go π-Rate DDR4</option>
-                    <option value="3">2 x 8 Go π-Rate DDR4</option>
-                    <option value="4">1 x 16 Go π-Rate DDR4</option>
-                    <option value="5">2 x 16 Go π-Rate DDR4</option>
-                    <option value="6">1 x 32 Go π-Rate DDR4</option>
+                    <?php foreach ($rams as $ram): ?>
+                    <option value="<?= $ram->getId() ?>"><?= $ram->getName() ?> - <?= $ram->getPrice() ?> &euro;</option>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <div class="form-group">
                 <label for="gpu">Carte graphique</label>
                 <select name="gpu" class="form-control">
-                    <option value="1">MSCOPIA VeStrength 1050 GTX</option>
-                    <option value="2">MSCOPIA VeStrength 1650 GTX</option>
-                    <option value="3">MSCOPIA VeStrength 2050 GTX</option>
+                    <?php foreach ($gpus as $gpu): ?>
+                    <option value="<?= $gpu->getId() ?>"><?= $gpu->getName() ?> - <?= $gpu->getPrice() ?> &euro;</option>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <div class="form-group">
                 <label for="hdd">Stockage</label>
                 <select name="hdd" class="form-control">
-                    <option value="1">π-Rate 500 Go HDD</option>
-                    <option value="2">π-Rate 1 To HDD</option>
-                    <option value="3">π-Rate 2 To HDD</option>
-                    <option value="4">Taeyong EVO 250 Go SSD</option>
-                    <option value="5">Taeyong EVO 500 Go SSD</option>
-                    <option value="6">Taeyong EVO 1 To SSD</option>
+                    <?php foreach ($hdds as $hdd): ?>
+                    <option value="<?= $hdd->getId() ?>"><?= $hdd->getName() ?> - <?= $hdd->getPrice() ?> &euro;</option>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <div class="form-group">
                 <label for="os">Système d'exploitation</label>
                 <select name="os" class="form-control">
                     <option value="0">Pas de système d'exploitation</option>
-                    <option value="1">Nanosoft Shutters® 10 - édition familiale</option>
-                    <option value="2">Nanosoft Shutters® 10 - édition professionnelle</option>
+                    <?php foreach ($os as $osItem): ?>
+                    <option value="<?= $osItem->getId() ?>"><?= $osItem->getName() ?> - <?= $osItem->getPrice() ?> &euro;</option>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary">Calculer</input>
