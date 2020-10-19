@@ -1,3 +1,12 @@
+<?php
+
+require_once './App/Models/CpuComponent.class.php';
+require_once './App/Models/GpuComponent.class.php';
+
+$databaseHandler = new PDO('mysql:host=localhost;dbname=php-config', 'root', 'root');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

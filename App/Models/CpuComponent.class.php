@@ -108,3 +108,14 @@ final class CpuComponent extends Component
         return $this;
     }
 }
+
+function createCpuComponent($id, $name, $price, $brandId, $clock, $cores) {
+    return new CpuComponent($id, $name, $price, $brandId, $clock, $cores);
+}
+
+function fetchAllCpuComponents() {
+    global $databaseHandler;
+
+    $statement = $databaseHandler->query('SELECT * FROM `cpus`');
+    return $statement->fetchAll(PDO::FETCH_FUNC, 'createCpuComponent');
+}
