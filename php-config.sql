@@ -32,20 +32,23 @@ CREATE TABLE `config` (
   `gpu_id` int(10) unsigned DEFAULT NULL,
   `hdd_id` int(10) unsigned DEFAULT NULL,
   `ram_id` int(10) unsigned DEFAULT NULL,
+  `os_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `cpu_id` (`cpu_id`),
   KEY `gpu_id` (`gpu_id`),
   KEY `hdd_id` (`hdd_id`),
   KEY `ram_id` (`ram_id`),
+  KEY `os_id` (`os_id`),
   CONSTRAINT `config_ibfk_1` FOREIGN KEY (`cpu_id`) REFERENCES `cpus` (`id`) ON DELETE SET NULL,
   CONSTRAINT `config_ibfk_2` FOREIGN KEY (`gpu_id`) REFERENCES `gpus` (`id`) ON DELETE SET NULL,
   CONSTRAINT `config_ibfk_3` FOREIGN KEY (`hdd_id`) REFERENCES `hdds` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `config_ibfk_4` FOREIGN KEY (`ram_id`) REFERENCES `rams` (`id`) ON DELETE SET NULL
+  CONSTRAINT `config_ibfk_4` FOREIGN KEY (`ram_id`) REFERENCES `rams` (`id`) ON DELETE SET NULL,
+  CONSTRAINT `config_ibfk_5` FOREIGN KEY (`os_id`) REFERENCES `os` (`id`) ON DELETE SET NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
-INSERT INTO `config` (`id`, `name`, `cpu_id`, `gpu_id`, `hdd_id`, `ram_id`) VALUES
-(1,	'Le moins cher',	1,	1,	1,	1),
-(2,	'Spécial graphiste',	1,	3,	4,	3);
+INSERT INTO `config` (`id`, `name`, `cpu_id`, `gpu_id`, `hdd_id`, `ram_id`, `os_id`) VALUES
+(1,	'Le moins cher',	1,	1,	1,	1,	NULL),
+(2,	'Spécial graphiste',	1,	3,	4,	3,	1);
 
 DROP TABLE IF EXISTS `cpus`;
 CREATE TABLE `cpus` (
@@ -136,7 +139,7 @@ INSERT INTO `rams` (`id`, `name`, `price`, `brand_id`, `chipset_size`, `chipset_
 (2,	'1 x 8 Go π-Rate DDR4',	50,	5,	8,	1),
 (3,	'2 x 8 Go π-Rate DDR4',	80,	5,	8,	2),
 (4,	'1 x 16 Go π-Rate DDR4',	100,	5,	16,	1),
-(5,	'2 x 16 Go π-Rate DDR4',	160,	5,	16,	2);
-(6,	'1 x 32 Go π-Rate DDR4',	200,	5,	32,	1),
+(5,	'1 x 32 Go π-Rate DDR4',	200,	5,	32,	1),
+(6,	'2 x 16 Go π-Rate DDR4',	160,	5,	16,	2);
 
--- 2020-10-18 19:22:13
+-- 2020-10-19 07:52:28
