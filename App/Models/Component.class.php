@@ -1,6 +1,12 @@
 <?php
 
-class Component
+// Le mot-clé 'abstract' permet de déclarer une classe comme "abstraite"
+// Une classe abstraite ne peut pas être instanciée (il n'est pas possible
+// de créer des objets à partir de cette classe en écrivant, en l'occurrence
+// new Component)
+// Une classe abstraite a simplement vocation à définir une interface pour
+// d'autres classes qui hériteront d'elle (à l'aide du mot-clé 'extends')
+abstract class Component
 {
     protected $id;
     protected $name;

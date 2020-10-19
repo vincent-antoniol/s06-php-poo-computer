@@ -2,7 +2,7 @@
 
 require_once './App/Models/Component.class.php';
 
-class GpuComponent extends Component
+final class GpuComponent extends Component
 {
     protected $ram;
 

@@ -15,7 +15,12 @@ require_once './App/Models/Component.class.php';
 // Une instance d'une classe-fille est aussi considérée comme une instance de
 // sa classe-mère (ici, un objet de type CpuComponent est aussi considéré comme
 // un objet de type Component)
-class CpuComponent extends Component
+
+// Le mot-clé 'final' permet de spécifier qu'une classe n'a pas vocation à être
+// dérivée
+// En l'occurrence, si on essaie de créer une nouvelle classe pour laquelle on
+// précise 'extends CpuComponent', PHP renverra un message d'erreur
+final class CpuComponent extends Component
 {
     protected $clock;
     protected $cores;
