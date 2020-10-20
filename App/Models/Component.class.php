@@ -113,4 +113,17 @@ abstract class Component
     {
         return fetchBrandById($this->brandId);
     }
+
+    /**
+     * Set component brand from Brand object
+     * 
+     * @param Brand $brand Related Brand object
+     * @return self
+     */
+    public function setBrand(Brand $brand): self
+    {
+        $this->brandId = $brand->getId();
+
+        return $this;
+    }
 }
