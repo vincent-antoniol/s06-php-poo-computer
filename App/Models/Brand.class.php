@@ -83,3 +83,17 @@ function fetchAllBrands() {
     $statement = $databaseHandler->query('SELECT * FROM `brands`');
     return $statement->fetchAll(PDO::FETCH_FUNC, 'createBrand');
 }
+
+function fetchBrandById(int $id): ?Brand {
+    global $databaseHandler;
+
+    $statement = $databaseHandler->prepare('SELECT * FROM `brands` WHERE `id` = :id');
+    $statement->execute([ ':id' => $id ]);
+    $result = $statement->fetchAll(PDO::FETCH_FUNC, 'createBrand');
+
+    if (empty($result)) {
+        return null;
+    }
+
+    return $result[0];
+}
