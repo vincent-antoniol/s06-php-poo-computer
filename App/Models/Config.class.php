@@ -101,6 +101,10 @@ final class Config
 
     public function getOs(): ?OsComponent
     {
+        if (is_null($this->osId)) {
+            return null;
+        }
+
         return fetchOsComponentById($this->osId);
     }
 
@@ -125,13 +129,19 @@ final class Config
 
     public function getTotalPrice()
     {
-        return
+        $totalPrice = 
             $this->getCpu()->getPrice()
             + $this->getGpu()->getPrice()
             + $this->getHdd()->getPrice()
-            + $this->getOs()->getPrice()
             + $this->getRam()->getPrice()
         ;
+
+        $os = $this->getOs();
+        if (!is_null($os)) {
+            $totalPrice += $os->getPrice();
+        }
+
+        return $totalPrice;
     }
 }
 
