@@ -1,18 +1,45 @@
 <?php
 
+require_once './App/Models/Brand.class.php';
+require_once './App/Models/Config.class.php';
 require_once './App/Models/CpuComponent.class.php';
 require_once './App/Models/GpuComponent.class.php';
 require_once './App/Models/HddComponent.class.php';
 require_once './App/Models/RamComponent.class.php';
 require_once './App/Models/OsComponent.class.php';
 
+// Initialise une interface avec la base de données
 $databaseHandler = new PDO('mysql:host=localhost;dbname=php-config', 'root', 'root');
 
+// Récupère l'ensemble des composants afin de les proposer dans le formulaire
 $cpus = fetchAllCpuComponents();
 $gpus = fetchAllGpuComponents();
 $hdds = fetchAllHddComponents();
 $os = fetchAllOsComponents();
 $rams = fetchAllRamComponents();
+
+// Si le formulaire vient d'être validé
+if (
+    isset($_GET['cpu'])
+    && isset($_GET['gpu'])
+    && isset($_GET['hdd'])
+    && isset($_GET['os'])
+    && isset($_GET['ram'])
+) {
+    // Crée une nouvelle configuration à partir de la sélection de l'utilisateur
+    $config = new Config(
+        null,
+        '',
+        $_GET['cpu'],
+        $_GET['gpu'],
+        $_GET['hdd'],
+        $_GET['ram'],
+        $_GET['os']
+    );
+
+    // Calcule le prix total de la configuration
+    $totalPrice = $config->getTotalPrice();
+}
 
 ?>
 
@@ -28,6 +55,13 @@ $rams = fetchAllRamComponents();
     <div class="container">
         <img src="images/Headerbild-pc-gamer-main.jpg" class="img-fluid mb-4" alt="PC gamer" />
         <h1>Composez votre PC gaming sur mesure</h1>
+        
+        <?php if (isset($totalPrice)): ?>
+        <div class="alert alert-info" role="alert">
+            Votre configuration s'élève à <?= $totalPrice ?> &euro;
+        </div>
+        <?php endif; ?>
+
         <form>
             <h2 class="mt-4 mb-2">Composants</h2>
             <div class="form-group">
