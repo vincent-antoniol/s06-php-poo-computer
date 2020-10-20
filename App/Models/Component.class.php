@@ -1,5 +1,7 @@
 <?php
 
+require_once './App/Models/Brand.class.php';
+
 // Le mot-clé 'abstract' permet de déclarer une classe comme "abstraite"
 // Une classe abstraite ne peut pas être instanciée (il n'est pas possible
 // de créer des objets à partir de cette classe en écrivant, en l'occurrence
@@ -102,7 +104,12 @@ abstract class Component
         return $this;
     }
 
-    public function getBrand()
+    /**
+     * Get component brand as Brand object
+     * 
+     * @return Brand
+     */
+    public function getBrand(): ?Brand
     {
         return fetchBrandById($this->brandId);
     }
