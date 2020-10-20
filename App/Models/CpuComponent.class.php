@@ -114,8 +114,20 @@ function createCpuComponent($id, $name, $price, $brandId, $clock, $cores) {
 }
 
 function fetchAllCpuComponents() {
+    // Le mot-clé 'global' permet d'indiquer à PHP que le nom de variable donné
+    // correspond à une variable déclarée en-dehors de la portée de la fonction
+    // actuelle
+    // Sinon, par défaut, $databaseHandler serait une variable qui serait détruite
+    // dès que la fonction se termine
     global $databaseHandler;
 
+    // Exécute la requête permettant de récupérer l'ensemble des processeurs
+    // dans la base de données
     $statement = $databaseHandler->query('SELECT * FROM `cpus`');
+    // Récupère tous les éléments de la réponse à la requête, en passant chaque
+    // enregistrement comme série d'arguments à la fonction désignée
+    // En l'occurrence, pour chaque enregistrement issue de la table 'cpus',
+    // PHP va exécuter:
+    // createCpuComponent(<id>, <name>, <price>, ...)
     return $statement->fetchAll(PDO::FETCH_FUNC, 'createCpuComponent');
 }
