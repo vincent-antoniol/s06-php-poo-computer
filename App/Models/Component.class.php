@@ -101,4 +101,9 @@ abstract class Component
 
         return $this;
     }
+
+    public function getBrand()
+    {
+        return fetchBrandById($this->brandId);
+    }
 }
