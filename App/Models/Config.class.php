@@ -122,4 +122,15 @@ final class Config
 
         return $this;
     }
+
+    public function getTotalPrice()
+    {
+        return
+            $this->getCpu()->getPrice()
+            + $this->getGpu()->getPrice()
+            + $this->getHdd()->getPrice()
+            + $this->getOs()->getPrice()
+            + $this->getRam()->getPrice()
+        ;
+    }
 }
