@@ -131,3 +131,16 @@ function fetchAllCpuComponents() {
     // createCpuComponent(<id>, <name>, <price>, ...)
     return $statement->fetchAll(PDO::FETCH_FUNC, 'createCpuComponent');
 }
+
+function fetchCpuComponentById(int $id): ?CpuComponent {
+    global $databaseHandler;
+
+    $statement = $databaseHandler->query('SELECT * FROM `cpus` WHERE `id` = ' . $id);
+    $result = $statement->fetchAll(PDO::FETCH_FUNC, 'createCpuComponent');
+    
+    if (empty($result)) {
+        return null;
+    }
+
+    return $result[0];
+}
