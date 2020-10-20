@@ -85,26 +85,6 @@ abstract class Component
     }
 
     /**
-     * Get the value of brandId
-     */ 
-    public function getBrandId()
-    {
-        return $this->brandId;
-    }
-
-    /**
-     * Set the value of brandId
-     *
-     * @return  self
-     */ 
-    public function setBrandId($brandId)
-    {
-        $this->brandId = $brandId;
-
-        return $this;
-    }
-
-    /**
      * Get component brand as Brand object
      * 
      * @return Brand
