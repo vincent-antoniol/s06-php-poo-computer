@@ -134,3 +134,28 @@ final class Config
         ;
     }
 }
+
+function createConfig($id, $name, $cpuId, $gpuId, $hddId, $ramId, $osId) {
+    return new Config($id, $name, $cpuId, $gpuId, $hddId, $ramId, $osId);
+}
+
+function fetchAllConfigs() {
+    global $databaseHandler;
+
+    $statement = $databaseHandler->query('SELECT * FROM `config`');
+    return $statement->fetchAll(PDO::FETCH_FUNC, 'createConfig');
+}
+
+function fetchConfigById(int $id): ?Config {
+    global $databaseHandler;
+
+    $statement = $databaseHandler->prepare('SELECT * FROM `config` WHERE `id` = :id');
+    $statement->execute([ ':id' => $id ]);
+    $result = $statement->fetchAll(PDO::FETCH_FUNC, 'createConfig');
+    
+    if (empty($result)) {
+        return null;
+    }
+
+    return $result[0];
+}
