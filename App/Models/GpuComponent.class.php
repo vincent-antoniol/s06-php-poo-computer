@@ -64,3 +64,17 @@ function fetchAllGpuComponents() {
     $statement = $databaseHandler->query('SELECT * FROM `gpus`');
     return $statement->fetchAll(PDO::FETCH_FUNC, 'createGpuComponent');
 }
+
+function fetchGpuComponentById(int $id): ?GpuComponent {
+    global $databaseHandler;
+
+    $statement = $databaseHandler->prepare('SELECT * FROM `gpus` WHERE `id` = :id');
+    $statement->execute([ ':id' => $id ]);
+    $result = $statement->fetchAll(PDO::FETCH_FUNC, 'createGpuComponent');
+    
+    if (empty($result)) {
+        return null;
+    }
+
+    return $result[0];
+}

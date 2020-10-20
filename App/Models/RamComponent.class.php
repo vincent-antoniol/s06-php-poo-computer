@@ -88,3 +88,17 @@ function fetchAllRamComponents() {
     $statement = $databaseHandler->query('SELECT * FROM `rams`');
     return $statement->fetchAll(PDO::FETCH_FUNC, 'createRamComponent');
 }
+
+function fetchRamComponentById(int $id): ?RamComponent {
+    global $databaseHandler;
+
+    $statement = $databaseHandler->prepare('SELECT * FROM `rams` WHERE `id` = :id');
+    $statement->execute([ ':id' => $id ]);
+    $result = $statement->fetchAll(PDO::FETCH_FUNC, 'createRamComponent');
+    
+    if (empty($result)) {
+        return null;
+    }
+
+    return $result[0];
+}

@@ -88,3 +88,17 @@ function fetchAllHddComponents() {
     $statement = $databaseHandler->query('SELECT * FROM `hdds`');
     return $statement->fetchAll(PDO::FETCH_FUNC, 'createHddComponent');
 }
+
+function fetchHddComponentById(int $id): ?HddComponent {
+    global $databaseHandler;
+
+    $statement = $databaseHandler->prepare('SELECT * FROM `hdds` WHERE `id` = :id');
+    $statement->execute([ ':id' => $id ]);
+    $result = $statement->fetchAll(PDO::FETCH_FUNC, 'createHddComponent');
+    
+    if (empty($result)) {
+        return null;
+    }
+
+    return $result[0];
+}
