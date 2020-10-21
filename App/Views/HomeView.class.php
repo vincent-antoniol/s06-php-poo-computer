@@ -1,21 +1,9 @@
 <?php
 
-class HomeView
+require_once './App/Views/View.class.php';
+
+class HomeView extends View
 {
-    private $templates;
-
-    /**
-     * Create a new StandardView object
-     * 
-     * @param array $templates List of templates to be displayed inside the view
-     * @param array $variables (Optional) Associative array matching each required variable name with its value
-     */
-    public function __construct(array $templates, array $variables = [])
-    {
-        $this->templates = $templates;
-        $this->variables = $variables;
-    }
-
     /**
      * Render the view as HTML page
      */
