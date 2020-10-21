@@ -35,6 +35,44 @@ final class Config
         $this->osId = $osId;
     }
 
+    /**
+     * Create a new record in database based on this object's properties
+     */
+    public function create()
+    {
+        global $databaseHandler;
+
+        $statement = $databaseHandler->prepare('
+            INSERT INTO `config` (
+                `name`,
+                `cpu_id`,
+                `gpu_id`,
+                `hdd_id`,
+                `ram_id`,
+                `os_id`
+            )
+            VALUES (
+                :name,
+                :cpu_id,
+                :gpu_id,
+                :hdd_id,
+                :ram_id,
+                :os_id
+            )
+        ');
+        $statement->execute([
+            ':name' => $this->name,
+            ':cpu_id' => $this->cpuId,
+            ':gpu_id' => $this->gpuId,
+            ':hdd_id' => $this->hddId,
+            ':ram_id' => $this->ramId,
+            ':os_id' => $this->osId,
+        ]);
+    }
+
+    /**
+     * Delete matching database record
+     */
     public function delete()
     {
         global $databaseHandler;
