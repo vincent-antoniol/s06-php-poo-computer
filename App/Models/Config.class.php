@@ -35,6 +35,13 @@ final class Config
         $this->osId = $osId;
     }
 
+    public function delete()
+    {
+        global $databaseHandler;
+
+        $databaseHandler->exec('DELETE FROM `config` WHERE `id` = ' . $this->id);
+    }
+
     /**
      * Get the value of id
      */ 
