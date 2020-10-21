@@ -36,9 +36,24 @@ final class Config
     }
 
     /**
+     * Save current object's properties in database
+     */
+    public function save()
+    {
+        // Si la configuration n'existe pas encore dans la base de données
+        if (is_null($this->id)) {
+            // Enregistre une nouvelle configuration en base de données
+            $this->create();
+        } else {
+            // Modifie la configuration déjà existante en base de données
+            $this->update();
+        }
+    }
+
+    /**
      * Create a new record in database based on this object's properties
      */
-    public function create()
+    protected function create()
     {
         global $databaseHandler;
 
@@ -61,6 +76,35 @@ final class Config
             )
         ');
         $statement->execute([
+            ':name' => $this->name,
+            ':cpu_id' => $this->cpuId,
+            ':gpu_id' => $this->gpuId,
+            ':hdd_id' => $this->hddId,
+            ':ram_id' => $this->ramId,
+            ':os_id' => $this->osId,
+        ]);
+    }
+
+    /**
+     * Update existing record in database based on this object's properties
+     */
+    protected function update()
+    {
+        global $databaseHandler;
+
+        $statement = $databaseHandler->prepare('
+            UPDATE `config`
+            SET
+                `name` = :name,
+                `cpu_id` = :cpu_id,
+                `gpu_id` = :gpu_id,
+                `hdd_id` = :hdd_id,
+                `ram_id` = :ram_id,
+                `os_id` = :os_id
+            WHERE `id` = :id;
+        ');
+        $statement->execute([
+            ':id' => $this->id,
             ':name' => $this->name,
             ':cpu_id' => $this->cpuId,
             ':gpu_id' => $this->gpuId,
