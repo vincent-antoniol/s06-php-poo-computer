@@ -83,6 +83,8 @@ final class Config
             ':ram_id' => $this->ramId,
             ':os_id' => $this->osId,
         ]);
+
+        $this->id = $databaseHandler->lastInsertId();
     }
 
     /**
